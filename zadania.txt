@@ -1,0 +1,269 @@
+1. Wpisz do tablicy n liczb podanych przez usera w sposób 
+rosnący i wypisz te z nich, które są "portugalskie".
+Przez liczby portugalskie rozumiemy liczby samotne czyli takie które nie 
+mają sąsiada w otoczeniu 2.
+WE: 5
+3 7 9 13 19
+WY:
+3 13 19
+
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Podaj liczbę n: ");
+        int n = int.Parse(Console.ReadLine());
+
+        int[] numbers = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Podaj {i + 1}. liczbę: ");
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        Console.WriteLine("Liczby portugalskie:");
+        for (int i = 0; i < n; i++)
+        {
+            if (IsPortuguese(numbers, i))
+                Console.Write($"{numbers[i]} ");
+        }
+    }
+
+    static bool IsPortuguese(int[] arr, int index)
+    {
+        if (index == 0 || index == arr.Length - 1)
+            return true;
+
+        return arr[index - 1] != arr[index] - 1 && arr[index + 1] != arr[index] + 1;
+    }
+}
+
+
+2. User podaje dowolny werset z Pana Tadeusza. Sprawdź czy w tym wersecie jakaś
+literka występuje co najmniej 3 razy. Użyj tablic (toCharArray())
+
+using System;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Podaj werset z Pana Tadeusza: ");
+        string verse = Console.ReadLine();
+
+        char[] letters = verse.ToLower().ToCharArray();
+        var letterCounts = letters.GroupBy(c => c).ToDictionary(g => g.Key, g => g.Count());
+
+        foreach (var kvp in letterCounts)
+        {
+            if (kvp.Value >= 3)
+                Console.WriteLine($"Litera '{kvp.Key}' występuje {kvp.Value} razy.");
+        }
+    }
+}
+
+
+
+
+3. User podaje dwie liczby brytyjskie. Przez liczby brytyjskie rozumiemy dwie 
+dowolne liczby dwucyfrowe różniące się przynajmniej o 50.
+Zapisz do listy wszystkie liczby pierwsze znajdujące się 
+między powyższymi liczbami.
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Podaj pierwszą liczbę brytyjską: ");
+        int num1 = int.Parse(Console.ReadLine());
+
+        Console.Write("Podaj drugą liczbę brytyjską (różniącą się przynajmniej o 50): ");
+        int num2 = int.Parse(Console.ReadLine());
+
+        for (int i = Math.Min(num1, num2); i <= Math.Max(num1, num2); i++)
+        {
+            if (IsPrime(i))
+                Console.Write($"{i} ");
+        }
+    }
+
+    static bool IsPrime(int num)
+    {
+        if (num <= 1)
+            return false;
+
+        for (int i = 2; i * i <= num; i++)
+        {
+            if (num % i == 0)
+                return false;
+        }
+
+        return true;
+    }
+}
+
+
+
+
+4. Utwórz strukturę losowych osób z losowymi danymi. Zadady:
+- wiek między 20 a 50 lat
+- imię 4 literowe zaczynająca się na A.
+- Nazwisko to odwrócenie imienia.
+Wylosuj takie 4 osoby i dodaj je do listy Osób. User nic tu nie wprowadza.
+
+using System;
+using System.Collections.Generic;
+
+struct Person
+{
+    public int Age;
+    public string FirstName;
+    public string LastName;
+}
+
+class Program
+{
+    static Random random = new Random();
+
+    static void Main()
+    {
+        List<Person> people = new List<Person>();
+
+        for (int i = 0; i < 4; i++)
+        {
+            Person person = GenerateRandomPerson();
+            people.Add(person);
+        }
+
+        Console.WriteLine("Wylosowane osoby:");
+        foreach (var person in people)
+        {
+            Console.WriteLine($"Imię: {person.FirstName}, Nazwisko
+            
+            
+
+5. Utwórz kolejkę liczb doskonałych 
+(liczby które równają się sumie swoich dzielników właściwych). 
+Umieść w niej 4 najmniejszych liczb doskonałych.
+Wyświtl kolejkę, usuń z niej 2 liczby i znów wyświtl to co zostało.
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Queue<int> doskonale = new Queue<int>();
+        doskonale.Enqueue(6);
+        doskonale.Enqueue(28);
+        doskonale.Enqueue(496);
+        doskonale.Enqueue(8128);
+
+        Console.WriteLine("Kolejka liczb doskonałych:");
+        foreach (var liczba in doskonale)
+        {
+            Console.WriteLine(liczba);
+        }
+
+        // Usuń dwie liczby
+        doskonale.Dequeue();
+        doskonale.Dequeue();
+
+        Console.WriteLine("\nPo usunięciu dwóch liczb:");
+        foreach (var liczba in doskonale)
+        {
+            Console.WriteLine(liczba);
+        }
+    }
+}
+
+
+
+
+6. Stwórz stos nieparzystych dwucyfrowych wieloktorności liczby 13.
+Usuń z tego stosu 2 liczby i wyświetl znów ten stos 
+dziwiąc się temu co na nim zostało.
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Stack<int> stos = new Stack<int>();
+        for (int i = 13; i < 100; i += 13)
+        {
+            if (i % 2 != 0)
+            {
+                stos.Push(i);
+            }
+        }
+
+        Console.WriteLine("Stos nieparzystych dwucyfrowych wielokrotności liczby 13:");
+        foreach (var liczba in stos)
+        {
+            Console.WriteLine(liczba);
+        }
+
+        // Usuń dwie liczby
+        stos.Pop();
+        stos.Pop();
+
+        Console.WriteLine("\nPo usunięciu dwóch liczb:");
+        foreach (var liczba in stos)
+        {
+            Console.WriteLine(liczba);
+        }
+    }
+}
+
+
+
+
+7. Kod Hufmanna to zamiana ciągu w stylu AAAAABBBBBBBCCC na 5A7B3C.
+Niech user poda wam n ciągów które zapiszecie to zwykłej tablicy.
+Potem przenieście te dane do słowinika, gdzie kluczem będzie kod ciągu
+a wartością ten ciąg.
+
+8. Stwórz graf składający się z 6 wierzchołków i 7 krawędzi. 
+Wypisz najwyższy stopień wierzchołka. Jeśli kilka wierzchołków ma ten sam stopień
+to wypisz dowolny z nich.
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Dictionary<int, List<int>> graf = new Dictionary<int, List<int>>();
+        graf.Add(1, new List<int> { 2, 3 });
+        graf.Add(2, new List<int> { 1, 4, 5 });
+        graf.Add(3, new List<int> { 1, 6 });
+        graf.Add(4, new List<int> { 2 });
+        graf.Add(5, new List<int> { 2 });
+        graf.Add(6, new List<int> { 3 });
+
+        int maxStopien = 0;
+        foreach (var wierzcholek in graf.Keys)
+        {
+            int stopien = graf[wierzcholek].Count;
+            if (stopien > maxStopien)
+            {
+                maxStopien = stopien;
+            }
+        }
+
+        Console.WriteLine($"Najwyższy stopień wierzchołka: {maxStopien}");
+    }
+}
+
+
+
+
